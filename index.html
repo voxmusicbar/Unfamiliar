@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOX Music Bar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            gold: {
+              DEFAULT: '#D4AF37',
+              50: '#FBF7E6',
+              100: '#F7F0D1',
+              200: '#EFE0A8',
+              300: '#E6D07F',
+              400: '#DEC056',
+              500: '#D4AF37',
+              600: '#AA8C2C',
+              700: '#806921',
+              800: '#554616',
+              900: '#2B230B',
+            },
+            dark: {
+              bg: '#0a0a0a',
+              surface: '#141414',
+              card: '#1c1c1c',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'slide-up': 'slideUp 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #050505;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Hide scrollbar for clean UI */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+
+    /* Custom classes for dynamic js */
+    .card-enter {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .card-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+
+<body class="min-h-screen pb-20 selection:bg-gold selection:text-black font-sans">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-40 w-full border-b border-white/10 bg-dark-bg/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-3">
+        <!-- Logo -->
+        <img
+          src="https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/%E6%88%AA%E5%9C%96%202025-10-17%20%E4%B8%8A%E5%8D%8811.24.39.png"
+          alt="VOX Music Bar" class="h-12 w-auto object-contain rounded-md" />
+        <div>
+          <h1 className="text-xl font-bold tracking-tight text-white font-serif">VOX Music Bar</h1>
+          <p class="text-[10px] text-gold tracking-[0.2em] uppercase font-serif">Sing & Drink</p>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+        <a href="#" class="hover:text-gold transition-colors">About</a>
+        <a href="#" class="text-gold">Menu</a>
+        <a href="#" class="hover:text-gold transition-colors">Location</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="relative overflow-hidden px-6 py-12 md:py-20 text-center">
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/10 blur-[120px] rounded-full pointer-events-none">
+    </div>
+    <h2 id="hero-title"
+      class="text-4xl md:text-6xl font-serif font-bold text-white mb-4 transition-all duration-1000 opacity-0 translate-y-10">
+      <span class="text-gold italic"></span>
+    </h2>
+    <p id="hero-subtitle"
+      class="text-gray-400 max-w-xl mx-auto text-base md:text-lg transition-all duration-1000 delay-100 opacity-0 translate-y-10">
+      感受精準工藝譜出的風味交響曲，揭開每杯特調獨有的風味秘密。
+    </p>
+  </header>
+
+  <!-- Grid -->
+  <main class="container mx-auto px-4 md:px-6 max-w-7xl">
+    <div id="cocktail-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-12">
+      <!-- Cards injected by JS -->
+    </div>
+
+    <!-- Category Grid -->
+    <h3 class="text-2xl font-serif font-bold text-white mb-6 pl-2 border-l-4 border-gold">More Selections</h3>
+    <div id="category-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 mb-20">
+      <!-- Category Cards injected by JS -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-white/5 py-10 text-center">
+    <p class="text-gray-500 text-sm">© 2024 Vox Music Bar. Please drink responsibly.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 flex">
+    <!-- Backdrop -->
+    <div id="modal-backdrop"
+      class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Modal Content -->
+    <div id="modal-card"
+      class="relative w-full max-w-5xl bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10 flex flex-col md:flex-row opacity-0 translate-y-10 transition-all duration-300 max-h-[90vh] md:max-h-[800px]">
+
+      <!-- Close Button (Mobile) -->
+      <button onclick="closeModal()"
+        class="absolute top-4 right-4 z-20 p-2 bg-black/50 backdrop-blur-md rounded-full text-white md:hidden">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+
+      <!-- Left: Image (Updated for full visibility) -->
+      <div class="w-full md:w-5/12 h-80 md:h-auto relative overflow-hidden bg-black flex items-center justify-center">
+        <img id="modal-image" src="" alt=""
+          class="w-full h-full object-contain opacity-100 transition-transform duration-700">
+        <!-- Gradient overlay removed to show full image -->
+      </div>
+
+      <!-- Right: Content -->
+      <div class="w-full md:w-7/12 p-6 md:p-10 lg:p-12 overflow-y-auto flex flex-col relative">
+        <!-- Close Button (Desktop) -->
+        <button onclick="closeModal()"
+          class="absolute top-6 right-6 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-all">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+
+        <div class="mb-1">
+          <span
+            class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest text-gold uppercase border border-gold/30 rounded-full bg-gold/5">
+            Signature Selection
+          </span>
+        </div>
+
+        <h2 id="modal-name" class="text-4xl md:text-5xl font-serif font-bold text-white mb-2"></h2>
+        <div class="flex items-center gap-4 mb-8">
+          <span id="modal-price" class="text-3xl text-gold font-light"></span>
+          <div class="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+
+        <!-- Ingredients Section -->
+        <div class="mb-10">
+          <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">liquor</span>
+            Ingredients
+          </h4>
+          <div id="modal-ingredients" class="flex flex-wrap gap-2">
+            <!-- Ingredients Injected JS -->
+          </div>
+        </div>
+
+        <!-- Flavor Profile Section -->
+        <div class="flex-1">
+          <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-lg">bar_chart</span>
+            Flavor Profile
+          </h4>
+          <div class="bg-black/20 rounded-xl p-6 border border-white/5">
+            <div id="modal-flavors" class="grid grid-cols-1 gap-4 w-full">
+              <!-- Flavors Injected JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-white/5 text-center md:text-left">
+          <p class="text-gray-500 text-xs italic">
+            * Prices are subject to a 10% service charge.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- List Modal (For Beer, Spirits, Soft Drinks) -->
+  <div id="list-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 flex">
+    <!-- Backdrop -->
+    <div id="list-modal-backdrop"
+      class="absolute inset-0 bg-black/90 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Modal Content -->
+    <div id="list-modal-card"
+      class="relative w-full max-w-md bg-[#1a1a1a] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10 flex flex-col opacity-0 translate-y-10 transition-all duration-300 max-h-[80vh]">
+
+      <!-- Header -->
+      <div class="p-6 border-b border-white/5 flex items-center justify-between bg-white/5">
+        <h2 id="list-modal-title" class="text-2xl font-serif font-bold text-white"></h2>
+        <button onclick="closeListModal()"
+          class="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-all">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="p-0 overflow-y-auto">
+        <div id="list-modal-items" class="divide-y divide-white/5">
+          <!-- Items Injected JS -->
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-white/5 text-center bg-[#141414]">
+        <p class="text-gray-500 text-xs italic">
+          * Prices are subject to a 10% service charge.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    // --- Data ---
+    const COCKTAILS = [
+      {
+        id: "1",
+        name: "多多綠",
+        price: 350,
+        ingredients: ["琴酒 (Gin)", "綠茶風味萃取 (Green Tea)", "養樂多風味萃取 (Yakult)"],
+        flavors: { "濃度": 1, "酸感": 2, "甜感": 2, "茶感": 1 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/1.png"
+      },
+      {
+        id: "2",
+        name: "序曲",
+        price: 350,
+        ingredients: ["蘭姆酒 (Rum)", "百香果 (Passion Fruit)", "香蜂草 (Lemon Balm)", "優格 (Yogurt)", "氣泡 (Sparkling)"],
+        flavors: { "濃度": 2, "酸感": 4, "甜感": 2, "草本": 1, "果香": 3 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/2.png"
+      },
+      {
+        id: "3",
+        name: "CC Lemon",
+        price: 350,
+        ingredients: ["琴酒 (Gin)", "柑橘 (Citrus)", "檸檬 (Lemon)", "氣泡 (Sparkling)"],
+        flavors: { "濃度": 2, "酸感": 4, "甜感": 3, "苦感": 1, "草本": 1, "果香": 4 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/3.png"
+      },
+      {
+        id: "4",
+        name: "野格好好喝",
+        price: 350,
+        ingredients: ["野格香甜酒 (Jägermeister)", "能量飲料 (Energy Drink)"],
+        flavors: { "濃度": 2, "甜感": 3, "草本": 2 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/4.png"
+      },
+      {
+        id: "5",
+        name: "花王木木",
+        price: 400,
+        ingredients: ["伏特加 (Vodka)", "蜜桃玫瑰茶 (Peach Rose Tea)", "水蜜桃 (Peach)", "蔓越梅 (Cranberry)", "氣泡 (Sparkling)"],
+        flavors: { "濃度": 2, "酸感": 3, "甜感": 2, "茶感": 1, "果香": 2, "花香": 4 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/5.png"
+      },
+      {
+        id: "6",
+        name: "萃夢",
+        price: 400,
+        ingredients: ["琴酒 (Gin)", "綠茶 (Green Tea)", "芭樂 (Guava)", "梅子 (Plum)", "玫瑰 (Rose)"],
+        flavors: { "濃度": 2, "酸感": 1, "甜感": 3, "茶感": 1, "果香": 4, "花香": 2 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/6.png"
+      },
+      {
+        id: "7",
+        name: "檸檬紅茶",
+        price: 400,
+        ingredients: ["琴酒 (Gin)", "檸檬 (Lemon)", "蜂蜜 (Honey)", "檸檬紅茶風味萃取 (Lemon Tea Extract)"],
+        flavors: { "濃度": 3, "酸感": 2, "甜感": 3, "茶感": 2, "果香": 3 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/7.png"
+      },
+      {
+        id: "8",
+        name: "觀音喝拿鐵",
+        price: 400,
+        ingredients: ["琴酒 (Gin)", "鐵觀音 (Tieguanyin)", "咖啡 (Coffee)", "鮮奶油 (Cream)", "牛奶 (Milk)"],
+        flavors: { "濃度": 3, "甜感": 4, "苦感": 1, "茶感": 2 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/8.png"
+      },
+      {
+        id: "9",
+        name: "茶香夢",
+        price: 450,
+        ingredients: ["威士忌 (Whiskey)", "伯爵茶 (Earl Grey)", "可可 (Cocoa)", "莓果 (Berry)", "伯爵茶糖 (Earl Grey Sugar)"],
+        flavors: { "濃度": 4, "酸感": 4, "甜感": 2, "苦感": 1, "茶感": 2, "果香": 3 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/9.png"
+      },
+      {
+        id: "10",
+        name: "水美眉",
+        price: 450,
+        ingredients: ["琴酒 (Gin)", "紅茶 (Black Tea)", "水蜜桃 (Peach)", "莓果 (Berry)", "蘋果 (Apple)"],
+        flavors: { "濃度": 4, "酸感": 4, "甜感": 3, "茶感": 2, "果香": 3, "花香": 3 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/10.png"
+      },
+      {
+        id: "11",
+        name: "醉花生",
+        price: 450,
+        ingredients: ["威士忌 (Whiskey)", "奶油 (Butter)", "花生 (Peanut)", "牛奶 (Milk)"],
+        flavors: { "濃度": 5, "甜感": 4, "鹹感": 1 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/11.png"
+      },
+      {
+        id: "12",
+        name: "VoX吶喊",
+        price: 500,
+        ingredients: ["艾碧斯 (Absinthe)", "伏特加 (Vodka)", "橙酒 (Cointreau)", "野格香甜酒 (Jägermeister)", "檸檬 (Lemon)", "蜂蜜 (Honey)", "能量飲料 (Energy Drink)"],
+        flavors: { "濃度": 5, "酸感": 1, "甜感": 4, "草本": 1 },
+        image: "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/12.png"
+      }
+    ];
+
+    const FLAVOR_LABELS = {
+      "濃度": "Strength",
+      "酸感": "Sourness",
+      "甜感": "Sweetness",
+      "茶感": "Tea",
+      "苦感": "Bitterness",
+      "草本": "Herbal",
+      "果香": "Fruity",
+      "花香": "Floral",
+      "鹹感": "Salty"
+    };
+
+    const DRINK_CATEGORIES = [
+      {
+        id: "beer",
+        name: "啤酒",
+        enName: "Beer",
+        icon: "sports_bar",
+        items: [
+          { name: "百威啤酒（小玻）", enName: "Budweiser Beer", price: 180, note: "6瓶900" },
+          { name: "海尼根啤酒（小玻）", enName: "Heineken Beer", price: 180, note: "6瓶900" },
+          { name: "朝日辛口啤酒（小玻）", enName: "Asahi Super Dry Beer", price: 180, note: "6瓶900" }
+        ]
+      },
+      {
+        id: "spirits",
+        name: "烈酒",
+        enName: "Spirits",
+        icon: "liquor",
+        items: [
+          { name: "軒尼詩 V.S.O.P", enName: "HENNESSY V.S.O.P", price: 4000 },
+          { name: "大摩 12年", enName: "DALMORE 12Y", price: 4000 },
+          { name: "百富 12年", enName: "BALVENIE 12Y", price: 3600 },
+          { name: "格蘭菲迪15年", enName: "GLENFIDDICH 15Y", price: 3200 }
+        ]
+      },
+      {
+        id: "soft-drinks",
+        name: "軟飲",
+        enName: "Soft Drinks",
+        icon: "local_drink", // or water_drop
+        items: [
+          { name: "可樂", enName: "Coke", price: 150 },
+          { name: "雪碧", enName: "Sprite", price: 150 },
+          { name: "蘇打水", enName: "Soda Water", price: 150 },
+          { name: "通寧水", enName: "Tonic Water", price: 150 },
+          { name: "柳橙汁", enName: "Orange Juice", price: 150 },
+          { name: "蔓越莓汁", enName: "Cranberry Juice", price: 150 },
+          { name: "蘋果汁", enName: "Apple Juice", price: 150 },
+          { name: "無糖綠茶", enName: "Sugar-free Green Tea", price: 150 },
+          { name: "紅茶", enName: "Black Tea", price: 150 },
+          { name: "奶茶", enName: "Milk Tea", price: 200 },
+          { name: "紅牛", enName: "Red Bull", price: 200 }
+        ]
+      }
+    ];
+
+    // --- Initialization ---
+    document.addEventListener('DOMContentLoaded', () => {
+      initHero();
+      renderGrid();
+      renderCategories();
+      renderGradualBlur();
+    });
+
+    function initHero() {
+      setTimeout(() => {
+        const title = document.getElementById('hero-title');
+        const subtitle = document.getElementById('hero-subtitle');
+
+        title.classList.remove('opacity-0', 'translate-y-10');
+        title.classList.add('opacity-100', 'translate-y-0');
+
+        subtitle.classList.remove('opacity-0', 'translate-y-10');
+        subtitle.classList.add('opacity-100', 'translate-y-0');
+      }, 100);
+    }
+
+    // --- Gradual Blur Logic (Vanilla JS Port) ---
+    function renderGradualBlur() {
+      // 1. Bottom Blur (Page Footer)
+      createBlurInstance({
+        strength: 3,
+        divCount: 8,
+        height: '4rem',
+        position: 'bottom',
+        zIndex: 30,
+        id: 'html-gradual-blur-bottom'
+      });
+
+      // 2. Top Blur (Page Header)
+      createBlurInstance({
+        strength: 3,
+        divCount: 8,
+        height: '6rem', // Slightly larger for header
+        position: 'top',
+        zIndex: 30, // Below navbar (40) but above content
+        id: 'html-gradual-blur-top'
+      });
+    }
+
+    function createBlurInstance(config) {
+      const container = document.createElement('div');
+      container.id = config.id;
+
+      let positionStyles = '';
+      if (config.position === 'bottom') {
+        positionStyles = `bottom: 0; left: 0; right: 0; height: ${config.height};`;
+      } else if (config.position === 'top') {
+        // Adjust top to sit right below the navbar if needed, or at absolute top 0
+        // Since navbar is sticky top-0 z-40, putting this at top:0 z-30 works well to blur content going under.
+        positionStyles = `top: 0; left: 0; right: 0; height: ${config.height};`;
+      }
+
+      container.style.cssText = `
+                position: fixed;
+                ${positionStyles}
+                z-index: ${config.zIndex}; 
+                pointer-events: none;
+                overflow: hidden;
+                transition: opacity 0.3s ease-out;
+            `;
+
+      const increment = 100 / config.divCount;
+
+      for (let i = 1; i <= config.divCount; i++) {
+        const layer = document.createElement('div');
+        const progress = i / config.divCount;
+        const blurValue = 0.0625 * (progress * config.divCount + 1) * config.strength;
+
+        const p1 = (increment * (i - 1)).toFixed(1);
+        const p2 = (increment * i).toFixed(1);
+        const p3 = (increment * (i + 1)).toFixed(1);
+        const p4 = (increment * (i + 2)).toFixed(1);
+
+        let gradientStops = '';
+
+        // Direction logic
+        // "to bottom": Top is 0%, Bottom is 100%
+        // "to top": Bottom is 0%, Top is 100%
+
+        // For BOTTOM Blur: We want Top=Transparent, Bottom=Opaque(Black in mask)
+        // Mask Gradient: transparent ... black
+
+        // For TOP Blur: We want Bottom=Transparent, Top=Opaque(Black in mask)
+        // Mask Gradient: transparent ... black (but direction flipped)
+
+        let direction = 'to bottom';
+        if (config.position === 'top') {
+          direction = 'to top';
+        }
+
+        let gradient = `transparent ${p1}%, black ${p2}%`;
+        if (parseFloat(p3) <= 100) gradient += `, black ${p3}%`;
+        if (parseFloat(p4) <= 100) gradient += `, transparent ${p4}%`;
+
+        layer.style.cssText = `
+                    position: absolute;
+                    inset: 0;
+                    backdrop-filter: blur(${blurValue}rem);
+                    -webkit-backdrop-filter: blur(${blurValue}rem);
+                    mask-image: linear-gradient(${direction}, ${gradient});
+                    -webkit-mask-image: linear-gradient(${direction}, ${gradient});
+                `;
+        container.appendChild(layer);
+      }
+      document.body.appendChild(container);
+    }
+
+    // --- Grid Rendering ---
+    function renderGrid() {
+      const grid = document.getElementById('cocktail-grid');
+      grid.innerHTML = '';
+
+      COCKTAILS.forEach((cocktail, index) => {
+        const cardContainer = document.createElement('div');
+        // Base animation classes
+        cardContainer.className = `transition-all duration-700 opacity-0 translate-y-20`;
+        // Add transition delay based on index
+        cardContainer.style.transitionDelay = `${index * 50}ms`;
+
+        // Card HTML
+        // Removed tilt logic and shine effect.
+        // Added hover:scale-[1.02] for a simple 2D zoom effect.
+        // Kept mask-image to fix rounded corner overflow issues.
+        cardContainer.innerHTML = `
+                    <div class="card-wrapper relative group cursor-pointer rounded-2xl bg-[#141414] border border-white/5 hover:border-gold/30 h-full flex flex-col overflow-hidden shadow-lg hover:shadow-gold/10 transition-transform duration-200 ease-out will-change-transform hover:scale-[1.02]" style="-webkit-mask-image: -webkit-radial-gradient(white, black); mask-image: radial-gradient(white, black);">
+                        
+                        <!-- Image Container -->
+                        <div class="relative aspect-[3/4] w-full overflow-hidden">
+                            <img 
+                                src="${cocktail.image}" 
+                                alt="${cocktail.name}" 
+                                class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                loading="lazy"
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent opacity-90"></div>
+                            
+                            <!-- Price Badge -->
+                            <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-gold font-bold shadow-lg">
+                                $${cocktail.price}
+                            </div>
+
+                            <!-- Overlay Info -->
+                            <div class="absolute bottom-0 left-0 w-full p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                 <h3 class="text-2xl font-serif font-bold text-white mb-1">${cocktail.name}</h3>
+                                 <p class="text-xs text-gray-400 line-clamp-1">${cocktail.ingredients.join(' • ')}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+        const cardWrapper = cardContainer.querySelector('.card-wrapper');
+        cardWrapper.addEventListener('click', () => openModal(cocktail));
+
+        grid.appendChild(cardContainer);
+
+        // Trigger animation after append
+        setTimeout(() => {
+          cardContainer.classList.remove('opacity-0', 'translate-y-20');
+          cardContainer.classList.add('opacity-100', 'translate-y-0');
+        }, 100);
+      });
+    }
+
+    // --- Category Rendering ---
+    function renderCategories() {
+      const grid = document.getElementById('category-grid');
+      grid.innerHTML = '';
+
+      DRINK_CATEGORIES.forEach((category, index) => {
+        const cardContainer = document.createElement('div');
+        cardContainer.className = `transition-all duration-700 opacity-0 translate-y-20`;
+        cardContainer.style.transitionDelay = `${(index + 4) * 50}ms`; // Delay after cocktails
+
+        cardContainer.innerHTML = `
+                <div class="group cursor-pointer rounded-2xl bg-[#141414] border border-white/5 hover:border-gold/30 h-40 flex flex-col items-center justify-center gap-4 hover:bg-white/5 transition-all duration-300 shadow-lg hover:shadow-gold/10 relative overflow-hidden" onclick="openListModal('${category.id}')">
+                        <div class="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <span class="material-symbols-outlined text-4xl text-gray-400 group-hover:text-gold transition-colors duration-300 relative z-10">${category.icon}</span>
+                        <div class="text-center relative z-10">
+                            <h3 class="text-xl font-serif font-bold text-white group-hover:text-gold transition-colors duration-300">${category.name}</h3>
+                            <p class="text-xs text-gray-500 mt-1">${category.enName}</p>
+                        </div>
+                </div>
+            `;
+
+        grid.appendChild(cardContainer);
+
+        setTimeout(() => {
+          cardContainer.classList.remove('opacity-0', 'translate-y-20');
+          cardContainer.classList.add('opacity-100', 'translate-y-0');
+        }, 100);
+      });
+    }
+
+    // --- List Modal Logic ---
+    function openListModal(categoryId) {
+      const category = DRINK_CATEGORIES.find(c => c.id === categoryId);
+      if (!category) return;
+
+      const modal = document.getElementById('list-modal');
+      const backdrop = document.getElementById('list-modal-backdrop');
+      const card = document.getElementById('list-modal-card');
+      const title = document.getElementById('list-modal-title');
+      const list = document.getElementById('list-modal-items');
+
+      title.textContent = category.name;
+
+      list.innerHTML = category.items.map(item => `
+            <div class="p-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+                <div>
+                    <div class="text-white font-medium">${item.name}</div>
+                    ${item.enName ? `<div class="text-xs text-gray-500">${item.enName}</div>` : ''}
+                </div>
+                <div class="text-right">
+                    ${item.price ? `<div class="text-gold font-bold">$${item.price}</div>` : ''}
+                    ${item.note ? `<div class="text-xs text-gray-400">${item.note}</div>` : ''}
+                </div>
+            </div>
+        `).join('');
+
+      modal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        backdrop.classList.remove('opacity-0');
+        card.classList.remove('opacity-0', 'translate-y-10');
+        card.classList.add('translate-y-0');
+      });
+
+      document.body.style.overflow = 'hidden';
+
+      backdrop.onclick = (e) => {
+        if (e.target === backdrop) closeListModal();
+      };
+    }
+
+    function closeListModal() {
+      const modal = document.getElementById('list-modal');
+      const backdrop = document.getElementById('list-modal-backdrop');
+      const card = document.getElementById('list-modal-card');
+
+      backdrop.classList.add('opacity-0');
+      card.classList.add('opacity-0', 'translate-y-10');
+      card.classList.remove('translate-y-0');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }, 300);
+    }
+
+    // --- Modal Logic ---
+    function openModal(cocktail) {
+      const modal = document.getElementById('detail-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+
+      // Populate Data
+      document.getElementById('modal-name').textContent = cocktail.name;
+      document.getElementById('modal-price').textContent = `$${cocktail.price}`;
+      document.getElementById('modal-image').src = cocktail.image;
+      document.getElementById('modal-image').alt = cocktail.name;
+
+      // Ingredients
+      const ingContainer = document.getElementById('modal-ingredients');
+      ingContainer.innerHTML = cocktail.ingredients.map(ing =>
+        `<span class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg text-gray-300 text-sm transition-colors">${ing}</span>`
+      ).join('');
+
+      // Flavors
+      const flavorsContainer = document.getElementById('modal-flavors');
+      flavorsContainer.innerHTML = Object.entries(cocktail.flavors).map(([key, value]) => {
+        const englishLabel = FLAVOR_LABELS[key] || key;
+        let iconsHtml = '';
+
+        // Just show the active score
+        for (let i = 0; i < value; i++) {
+          iconsHtml += `<span class="material-symbols-outlined text-gold text-xl">mic</span>`;
+        }
+
+        return `
+                    <div class="flex items-center justify-between group border-b border-white/5 last:border-0 py-3">
+                        <div class="flex flex-col">
+                            <span class="text-gray-300 text-sm font-medium tracking-wider">${key}</span>
+                            <span class="text-[10px] text-gray-500 uppercase">${englishLabel}</span>
+                        </div>
+                        <!-- Fixed width container (w-40) aligned to start (justify-start) so icons grow from left-to-right -->
+                        <div class="flex items-center justify-start gap-1 w-40 flex-nowrap">
+                            ${iconsHtml}
+                        </div>
+                    </div>
+                `;
+      }).join('');
+
+      // Show Modal
+      modal.classList.remove('hidden');
+      // Allow minimal time for display:block to apply before transitioning opacity
+      requestAnimationFrame(() => {
+        backdrop.classList.remove('opacity-0');
+        card.classList.remove('opacity-0', 'translate-y-10');
+        card.classList.add('translate-y-0');
+      });
+
+      document.body.style.overflow = 'hidden';
+
+      // Close on backdrop click
+      backdrop.onclick = (e) => {
+        if (e.target === backdrop) closeModal();
+      };
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('detail-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const card = document.getElementById('modal-card');
+
+      backdrop.classList.add('opacity-0');
+      card.classList.add('opacity-0', 'translate-y-10');
+      card.classList.remove('translate-y-0');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }, 300); // Match transition duration
+    }
+
+  </script>
+</body>
+
+</html>
