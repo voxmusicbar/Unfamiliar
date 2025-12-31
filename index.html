@@ -153,7 +153,7 @@
     <!-- Convention Photo -->
     <div class="mt-14 md:mt-16 mb-12">
       <div class="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-        <img src="https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/blob/main/S__172515568.jpg" alt="VOX 公約"
+        <img src="https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/main/S__172515568.jpg" alt="VOX 公約"
           class="w-full h-auto object-contain" />
       </div>
     </div>
@@ -473,11 +473,15 @@
         const title = document.getElementById('hero-title');
         const subtitle = document.getElementById('hero-subtitle');
 
-        title.classList.remove('opacity-0', 'translate-y-10');
-        title.classList.add('opacity-100', 'translate-y-0');
+        if (title) {
+            title.classList.remove('opacity-0', 'translate-y-10');
+            title.classList.add('opacity-100', 'translate-y-0');
+        }
 
-        subtitle.classList.remove('opacity-0', 'translate-y-10');
-        subtitle.classList.add('opacity-100', 'translate-y-0');
+        if (subtitle) {
+            subtitle.classList.remove('opacity-0', 'translate-y-10');
+            subtitle.classList.add('opacity-100', 'translate-y-0');
+        }
       }, 100);
     }
 
@@ -505,6 +509,9 @@
     }
 
     function createBlurInstance(config) {
+      // Check if already exists
+      if (document.getElementById(config.id)) return;
+
       const container = document.createElement('div');
       container.id = config.id;
 
@@ -575,6 +582,7 @@
     // --- Grid Rendering ---
     function renderGrid() {
       const grid = document.getElementById('cocktail-grid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       COCKTAILS.forEach((cocktail, index) => {
@@ -631,6 +639,7 @@
     // --- Category Rendering ---
     function renderCategories() {
       const grid = document.getElementById('category-grid');
+      if (!grid) return;
       grid.innerHTML = '';
 
       DRINK_CATEGORIES.forEach((category, index) => {
