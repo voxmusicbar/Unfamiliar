@@ -151,7 +151,7 @@
   <!-- Grid -->
   <main class="container mx-auto px-4 md:px-6 max-w-7xl">
     <!-- Convention Photo -->
-    <div class="mt-14 md:mt-16 mb-12">
+    <div id="hero-image-container" class="mt-14 md:mt-16 mb-12">
       <div class="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
         <img id="hero-image" src="" alt="VOX 公約" class="w-full h-auto object-contain" />
       </div>
@@ -313,6 +313,9 @@
 
         if (data.HERO_IMAGE) {
           document.getElementById('hero-image').src = data.HERO_IMAGE;
+          document.getElementById('hero-image-container').classList.remove('hidden');
+        } else {
+          document.getElementById('hero-image-container').classList.add('hidden');
         }
 
         initHero();
