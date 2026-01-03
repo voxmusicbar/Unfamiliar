@@ -74,28 +74,6 @@
       "image": "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/4.png"
     },
     {
-      "name": "花王木木",
-      "enName": "",
-      "price": 420,
-      "id": "5",
-      "image": "https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/main/images/item_1767464276737.png",
-      "ingredients": [
-        "伏特加 (Vodka)",
-        "蜜桃玫瑰茶 (Peach Rose Tea)",
-        "水蜜桃 (Peach)",
-        "蔓越莓 (Cranberry)",
-        "氣泡 (Sparkling)"
-      ],
-      "flavors": {
-        "濃度": 2,
-        "酸感": 3,
-        "甜感": 2,
-        "茶感": 1,
-        "果香": 2,
-        "花香": 4
-      }
-    },
-    {
       "id": "6",
       "name": "萃夢",
       "price": 420,
@@ -134,6 +112,28 @@
         "果香": 3
       },
       "image": "https://raw.githubusercontent.com/milk3462-art/VOX-Music-Bar/main/7.png"
+    },
+    {
+      "name": "花王木木",
+      "enName": "",
+      "price": 420,
+      "id": "5",
+      "image": "https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/main/images/item_1767464276737.png",
+      "ingredients": [
+        "伏特加 (Vodka)",
+        "蜜桃玫瑰茶 (Peach Rose Tea)",
+        "水蜜桃 (Peach)",
+        "蔓越莓 (Cranberry)",
+        "氣泡 (Sparkling)"
+      ],
+      "flavors": {
+        "濃度": 2,
+        "酸感": 3,
+        "甜感": 2,
+        "茶感": 1,
+        "果香": 2,
+        "花香": 4
+      }
     },
     {
       "id": "9",
@@ -202,16 +202,38 @@
       "image": "https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/main/images/item_1767465173046.png",
       "ingredients": [
         "琴酒(Gin)",
-        "鐵觀音",
-        "咖啡",
-        "鮮奶油",
-        "牛奶"
+        "鐵觀音(Tieguanyin Tea)",
+        "咖啡(Coffee)",
+        "鮮奶油(Heavy Cream)",
+        "牛奶(Milk)"
       ],
       "flavors": {
         "濃度": 3,
         "甜感": 4,
         "茶感": 2,
         "苦感": 1
+      }
+    },
+    {
+      "name": "VOX吶喊",
+      "enName": "",
+      "price": 500,
+      "id": "1767465751147",
+      "image": "https://raw.githubusercontent.com/Unfa-miliar/Unfamiliar/main/images/item_1767465732564.png",
+      "ingredients": [
+        "艾碧斯(Absinthe)",
+        "伏特加(Vodka)",
+        "橙酒(Triple Sec)",
+        "野葛香甜酒(Jägermeister)",
+        "檸檬(Lemon)",
+        "蜂蜜(Honey)",
+        "能量飲料(Energy Drink)"
+      ],
+      "flavors": {
+        "濃度": 5,
+        "酸感": 1,
+        "甜感": 4,
+        "草本": 1
       }
     }
   ],
